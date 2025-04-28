@@ -1,4 +1,4 @@
-![HurryUp Logo](https://sdmntprwestus2.oaiusercontent.com/files/00000000-7a7c-61f8-96a9-4949d8c9320c/raw?se=2025-04-28T01%3A07%3A20Z&sp=r&sv=2024-08-04&sr=b&scid=8195461e-572e-5d1e-879e-b8d79e888779&skoid=b53ae837-f585-4db7-b46f-2d0322fce5a9&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-27T14%3A29%3A31Z&ske=2025-04-28T14%3A29%3A31Z&sks=b&skv=2024-08-04&sig=OrMPQGRcea3jUUf5vdIA4J3IiAwfYxz3pQBBHwLPMSk%3D)
+![HurryUp Logo](./src/main/resources/static/hurryup-logo-2x1.png)
 
 # HurryUP
 
