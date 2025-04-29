@@ -18,12 +18,14 @@
 - [] The system will calculate the days remaining until the event
 - [] Each event must include a name, description, date, and image, with image and description as optional fields
 - [] The event list must support filtering by title or description
-- [] Create error handling <------ CODING
-- [] The data must be validated
+- [x] Create error handling
+- [] The data must be validated <--- [NEXT]
 
 ### NFR [Non Functional Requirements]
 - [x] All data must be persisted in a PostgreSQL Database
 - [] The API must be consumed by a frontend
+- [] Create tests
+- [] Create Docs
 
 ## Future Features
 - Store files at s3 bucket
