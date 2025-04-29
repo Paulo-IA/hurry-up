@@ -1,4 +1,4 @@
-package com.paulo.hurry_up.model;
+package com.paulo.hurry_up.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

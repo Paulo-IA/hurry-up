@@ -3,7 +3,8 @@ package com.paulo.hurry_up.service;
 import com.paulo.hurry_up.dto.ResponseEventDTO;
 import com.paulo.hurry_up.dto.RequestCreateEventDTO;
 import com.paulo.hurry_up.dto.ResponseCreateEventDTO;
-import com.paulo.hurry_up.model.Event;
+import com.paulo.hurry_up.domain.Event;
+import com.paulo.hurry_up.exceptions.EventNotFoundException;
 import com.paulo.hurry_up.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EventService {
@@ -50,8 +52,7 @@ public class EventService {
 
 
         return events.stream().map(e -> {
-            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
-            Long daysToGo = Duration.between(now, e.getDate()).toDays();
+            Long daysToGo = daysFromNow(e.getDate());
 
             return new ResponseEventDTO(
                     e.getId(),
@@ -61,5 +62,19 @@ public class EventService {
                     e.getCreatedAt(),
                     daysToGo);
         }).toList();
+    }
+
+    public ResponseEventDTO findById(UUID id) throws EventNotFoundException {
+        Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+
+        Long daysToGo = daysFromNow(event.getDate());
+
+        return new ResponseEventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), event.getCreatedAt(), daysToGo);
+    }
+
+    private Long daysFromNow(ZonedDateTime date) {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+
+        return Duration.between(now, date).toDays();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/events")
@@ -33,5 +34,12 @@ public class EventController {
         List<ResponseEventDTO> events = this.eventService.findAll();
 
         return ResponseEntity.ok(events);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseEventDTO> findById(@PathVariable UUID id) throws Exception {
+        ResponseEventDTO event = this.eventService.findById(id);
+
+        return ResponseEntity.ok(event);
     }
 }

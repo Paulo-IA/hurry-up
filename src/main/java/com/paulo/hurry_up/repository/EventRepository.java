@@ -1,6 +1,6 @@
 package com.paulo.hurry_up.repository;
 
-import com.paulo.hurry_up.model.Event;
+import com.paulo.hurry_up.domain.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

@@ -18,7 +18,7 @@
 - [] The system will calculate the days remaining until the event
 - [] Each event must include a name, description, date, and image, with image and description as optional fields
 - [] The event list must support filtering by title or description
-- [] Create error handling
+- [] Create error handling <------ CODING
 - [] The data must be validated
 
 ### NFR [Non Functional Requirements]
