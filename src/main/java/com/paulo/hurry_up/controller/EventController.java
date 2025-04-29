@@ -1,8 +1,8 @@
 package com.paulo.hurry_up.controller;
 
+import com.paulo.hurry_up.dto.ResponseEventDTO;
 import com.paulo.hurry_up.dto.RequestCreateEventDTO;
 import com.paulo.hurry_up.dto.ResponseCreateEventDTO;
-import com.paulo.hurry_up.model.Event;
 import com.paulo.hurry_up.service.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +28,9 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Event>> findAll() {
+    public ResponseEntity<List<ResponseEventDTO>> findAll() {
 
-        List<Event> events = this.eventService.findAll();
+        List<ResponseEventDTO> events = this.eventService.findAll();
 
         return ResponseEntity.ok(events);
     }

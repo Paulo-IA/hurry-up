@@ -1,6 +1,5 @@
-package com.paulo.hurry_up.model;
+package com.paulo.hurry_up.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,21 +12,11 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "events")
-public class Event {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class ResponseEventDTO {
     private UUID id;
-
     private String name;
     private String description;
-
-    @Column(name = "date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime date;
-
-    @Column(name = "createdAt", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime createdAt;
-
+    private Long daysToGo;
 }

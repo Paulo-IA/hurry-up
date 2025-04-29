@@ -1,11 +1,15 @@
 package com.paulo.hurry_up.service;
 
+import com.paulo.hurry_up.dto.ResponseEventDTO;
 import com.paulo.hurry_up.dto.RequestCreateEventDTO;
 import com.paulo.hurry_up.dto.ResponseCreateEventDTO;
 import com.paulo.hurry_up.model.Event;
 import com.paulo.hurry_up.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -29,15 +33,33 @@ public class EventService {
         Event event = new Event();
         event.setName(dto.name());
         event.setDescription(dto.description());
-        event.setDate(dto.date());
+
+        ZonedDateTime eventDate = dto.date().withZoneSameInstant(ZoneId.of("UTC"));
+        event.setDate(eventDate);
+
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+        event.setCreatedAt(now);
 
         eventRepository.save(event);
 
         return new ResponseCreateEventDTO(event.getId());
     }
 
-    public List<Event> findAll() {
+    public List<ResponseEventDTO> findAll() {
+        List<Event> events = eventRepository.findAll();
 
-        return eventRepository.findAll();
+
+        return events.stream().map(e -> {
+            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+            Long daysToGo = Duration.between(now, e.getDate()).toDays();
+
+            return new ResponseEventDTO(
+                    e.getId(),
+                    e.getName(),
+                    e.getDescription(),
+                    e.getDate(),
+                    e.getCreatedAt(),
+                    daysToGo);
+        }).toList();
     }
 }
