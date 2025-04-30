@@ -1,8 +1,6 @@
 package com.paulo.hurry_up.service;
 
-import com.paulo.hurry_up.dto.ResponseEventDTO;
-import com.paulo.hurry_up.dto.RequestCreateEventDTO;
-import com.paulo.hurry_up.dto.ResponseCreateEventDTO;
+import com.paulo.hurry_up.dto.*;
 import com.paulo.hurry_up.domain.Event;
 import com.paulo.hurry_up.exceptions.EventNotFoundException;
 import com.paulo.hurry_up.repository.EventRepository;
@@ -45,6 +43,18 @@ public class EventService {
         eventRepository.save(event);
 
         return new ResponseCreateEventDTO(event.getId());
+    }
+
+    public ResponseUpdateEventDTO update(UUID id, RequestUpdateEventDTO dto) throws EventNotFoundException {
+        Event event = this.eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+
+        event.setName(dto.getName());
+        event.setDescription(dto.getDescription());
+        event.setDate(dto.getDate());
+
+        this.eventRepository.save(event);
+
+        return new ResponseUpdateEventDTO(event.getId());
     }
 
     public List<ResponseEventDTO> findAll() {

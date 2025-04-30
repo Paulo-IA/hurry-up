@@ -1,11 +1,8 @@
 package com.paulo.hurry_up.controller;
 
-import com.paulo.hurry_up.dto.ResponseEventDTO;
-import com.paulo.hurry_up.dto.RequestCreateEventDTO;
-import com.paulo.hurry_up.dto.ResponseCreateEventDTO;
+import com.paulo.hurry_up.dto.*;
 import com.paulo.hurry_up.service.EventService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +25,16 @@ public class EventController {
         ResponseCreateEventDTO response = this.eventService.create(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseUpdateEventDTO> update(
+            @PathVariable UUID id,
+            @RequestBody @Valid RequestUpdateEventDTO dto
+    ) {
+        ResponseUpdateEventDTO response = this.eventService.update(id, dto);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
     @GetMapping

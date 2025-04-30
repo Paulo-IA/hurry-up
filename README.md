@@ -15,8 +15,8 @@
 - [x] The system must retrieve a single event
 
 ### BR [Business Rules]
-- [ ] The system will calculate the days remaining until the event
-- [x] Each event must include a name, description, date, and image, with image and description as optional fields
+- [x] The system will calculate the days remaining until the event
+- [ ] Each event must include a name, description, date, and image, with image and description as optional fields
 - [ ] The event list must support filtering by title or description
 - [x] Create error handling
 - [x] The data must be validated
