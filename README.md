@@ -9,7 +9,7 @@
 
 ### FR [Functional Requirements]
 - [x] The system must allow creating an event
-- [ ] The system must allow updating an event
+- [x] The system must allow updating an event
 - [ ] The system must allow deleting an event
 - [ ] The system must list all events
 - [x] The system must retrieve a single event
