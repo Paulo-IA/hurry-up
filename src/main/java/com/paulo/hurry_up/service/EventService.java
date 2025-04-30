@@ -23,20 +23,20 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public ResponseCreateEventDTO create(RequestCreateEventDTO dto) throws Exception {
-        if (dto.name() == null) {
+    public ResponseCreateEventDTO create(RequestCreateEventDTO dto) {
+        if (dto.getName() == null) {
             throw new IllegalArgumentException("Name is required");
         }
 
-        if (dto.date() == null) {
+        if (dto.getDate() == null) {
             throw new IllegalArgumentException("Date is required");
         }
 
         Event event = new Event();
-        event.setName(dto.name());
-        event.setDescription(dto.description());
+        event.setName(dto.getName());
+        event.setDescription(dto.getDescription());
 
-        ZonedDateTime eventDate = dto.date().withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime eventDate = dto.getDate().withZoneSameInstant(ZoneId.of("UTC"));
         event.setDate(eventDate);
 
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));

@@ -19,7 +19,7 @@
 - [] Each event must include a name, description, date, and image, with image and description as optional fields
 - [] The event list must support filtering by title or description
 - [x] Create error handling
-- [] The data must be validated <--- [NEXT]
+- [] The data must be validated
 
 ### NFR [Non Functional Requirements]
 - [x] All data must be persisted in a PostgreSQL Database
