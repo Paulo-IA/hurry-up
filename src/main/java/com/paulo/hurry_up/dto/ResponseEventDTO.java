@@ -18,5 +18,5 @@ public class ResponseEventDTO {
     private String description;
     private ZonedDateTime date;
     private ZonedDateTime createdAt;
-    private Long daysToGo;
+    private DaysToGo daysToGo;
 }

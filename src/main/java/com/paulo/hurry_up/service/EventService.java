@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Service
 public class EventService {
+    private static final Long DAYS_IN_THE_WEEK = 7L;
 
     private final EventRepository eventRepository;
 
@@ -62,7 +63,9 @@ public class EventService {
 
 
         return events.stream().map(e -> {
-            Long daysToGo = daysFromNow(e.getDate());
+            DaysToGo daysToGo = new DaysToGo();
+            daysToGo.setDaysToGo(daysFromNow(e.getDate()));
+            daysToGo.setWorkingDaysToGo(workingDaysFromNow(e.getDate()));
 
             return new ResponseEventDTO(
                     e.getId(),
@@ -77,7 +80,9 @@ public class EventService {
     public ResponseEventDTO findById(UUID id) throws EventNotFoundException {
         Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
 
-        Long daysToGo = daysFromNow(event.getDate());
+        DaysToGo daysToGo = new DaysToGo();
+        daysToGo.setDaysToGo(daysFromNow(event.getDate()));
+        daysToGo.setWorkingDaysToGo(workingDaysFromNow(event.getDate()));
 
         return new ResponseEventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), event.getCreatedAt(), daysToGo);
     }
@@ -92,5 +97,13 @@ public class EventService {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
 
         return Duration.between(now, date).toDays();
+    }
+
+    private Integer workingDaysFromNow(ZonedDateTime date) {
+        Long daysFromNow = daysFromNow(date);
+
+        int weekendsDays = Math.round((float) daysFromNow / DAYS_IN_THE_WEEK) * 2;
+
+        return daysFromNow.intValue() - weekendsDays;
     }
 }

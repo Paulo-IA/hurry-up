@@ -16,7 +16,7 @@
 
 ### BR [Business Rules]
 - [x] The system will calculate the days remaining until the event
-- [ ] The system will calculate the working days remaining until the event
+- [x] The system will calculate the working days remaining until the event
 - [ ] Each event must include a name, description, date, and image, with image and description as optional fields
 - [ ] The event list must support filtering by title or description
 - [x] Create error handling
