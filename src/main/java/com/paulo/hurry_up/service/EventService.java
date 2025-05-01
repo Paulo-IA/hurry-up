@@ -82,6 +82,12 @@ public class EventService {
         return new ResponseEventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), event.getCreatedAt(), daysToGo);
     }
 
+    public void delete(UUID id) throws EventNotFoundException {
+        Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+
+        eventRepository.deleteById(event.getId());
+    }
+
     private Long daysFromNow(ZonedDateTime date) {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
 
