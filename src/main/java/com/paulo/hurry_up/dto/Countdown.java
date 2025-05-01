@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DaysToGo {
-    private Long daysToGo;
-    private Integer workingDaysToGo;
+public class Countdown {
+    private Long totalDays;
+    private Integer workingDays;
 }

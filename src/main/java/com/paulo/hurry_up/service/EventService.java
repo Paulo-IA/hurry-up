@@ -63,9 +63,9 @@ public class EventService {
 
 
         return events.stream().map(e -> {
-            DaysToGo daysToGo = new DaysToGo();
-            daysToGo.setDaysToGo(daysFromNow(e.getDate()));
-            daysToGo.setWorkingDaysToGo(workingDaysFromNow(e.getDate()));
+            Countdown countdown = new Countdown();
+            countdown.setTotalDays(daysFromNow(e.getDate()));
+            countdown.setWorkingDays(workingDaysFromNow(e.getDate()));
 
             return new ResponseEventDTO(
                     e.getId(),
@@ -73,18 +73,18 @@ public class EventService {
                     e.getDescription(),
                     e.getDate(),
                     e.getCreatedAt(),
-                    daysToGo);
+                    countdown);
         }).toList();
     }
 
     public ResponseEventDTO findById(UUID id) throws EventNotFoundException {
         Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
 
-        DaysToGo daysToGo = new DaysToGo();
-        daysToGo.setDaysToGo(daysFromNow(event.getDate()));
-        daysToGo.setWorkingDaysToGo(workingDaysFromNow(event.getDate()));
+        Countdown countdown = new Countdown();
+        countdown.setTotalDays(daysFromNow(event.getDate()));
+        countdown.setWorkingDays(workingDaysFromNow(event.getDate()));
 
-        return new ResponseEventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), event.getCreatedAt(), daysToGo);
+        return new ResponseEventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), event.getCreatedAt(), countdown);
     }
 
     public void delete(UUID id) throws EventNotFoundException {
