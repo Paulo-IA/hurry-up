@@ -19,6 +19,7 @@
 - [x] The system will calculate the working days remaining until the event
 - [ ] Each event must include a name, description, date, and image, with image and description as optional fields
 - [ ] The event list must support filtering by title or description
+- [ ] The event description must have a maximum of 80 characters
 - [x] Create error handling
 - [x] The data must be validated
 

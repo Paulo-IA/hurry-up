@@ -45,6 +45,17 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/paginate")
+    public ResponseEntity<List<ResponseEventDTO>> findAllPaginated(
+            @RequestParam String q,
+            @RequestParam int page,
+            @RequestParam int take
+    ) {
+        List<ResponseEventDTO> events = this.eventService.findAllPaginated(q, page, take);
+
+        return ResponseEntity.ok(events);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ResponseEventDTO> findById(@PathVariable UUID id) throws Exception {
         ResponseEventDTO event = this.eventService.findById(id);

@@ -4,6 +4,9 @@ import com.paulo.hurry_up.dto.*;
 import com.paulo.hurry_up.domain.Event;
 import com.paulo.hurry_up.exceptions.EventNotFoundException;
 import com.paulo.hurry_up.repository.EventRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -69,6 +72,25 @@ public class EventService {
 
             return new ResponseEventDTO(
                     e.getId(),
+                    e.getName(),
+                    e.getDescription(),
+                    e.getDate(),
+                    e.getCreatedAt(),
+                    countdown);
+        }).toList();
+    }
+
+    public List<ResponseEventDTO> findAllPaginated(String q, int page, int take) {
+        Pageable pageable = PageRequest.of(page, take);
+
+        Page<Event> eventsPage = this.eventRepository.findAllByEventName(q, pageable);
+
+        return eventsPage.map(e -> {
+            Countdown countdown = new Countdown();
+            countdown.setTotalDays(daysFromNow(e.getDate()));
+            countdown.setWorkingDays(workingDaysFromNow(e.getDate()));
+
+            return new ResponseEventDTO(e.getId(),
                     e.getName(),
                     e.getDescription(),
                     e.getDate(),
