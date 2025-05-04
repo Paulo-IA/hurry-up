@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.UUID;
 
 @Service
 public class EventService {
-    private static final Long DAYS_IN_THE_WEEK = 7L;
 
     private final EventRepository eventRepository;
 
@@ -66,9 +64,7 @@ public class EventService {
 
 
         return events.stream().map(e -> {
-            Countdown countdown = new Countdown();
-            countdown.setTotalDays(daysFromNow(e.getDate()));
-            countdown.setWorkingDays(workingDaysFromNow(e.getDate()));
+            Countdown countdown = new Countdown(e.getDate());
 
             return new ResponseEventDTO(
                     e.getId(),
@@ -86,9 +82,7 @@ public class EventService {
         Page<Event> eventsPage = this.eventRepository.findAllByEventName(q, pageable);
 
         return eventsPage.map(e -> {
-            Countdown countdown = new Countdown();
-            countdown.setTotalDays(daysFromNow(e.getDate()));
-            countdown.setWorkingDays(workingDaysFromNow(e.getDate()));
+            Countdown countdown = new Countdown(e.getDate());
 
             return new ResponseEventDTO(e.getId(),
                     e.getName(),
@@ -102,9 +96,7 @@ public class EventService {
     public ResponseEventDTO findById(UUID id) throws EventNotFoundException {
         Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
 
-        Countdown countdown = new Countdown();
-        countdown.setTotalDays(daysFromNow(event.getDate()));
-        countdown.setWorkingDays(workingDaysFromNow(event.getDate()));
+        Countdown countdown = new Countdown(event.getDate());
 
         return new ResponseEventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), event.getCreatedAt(), countdown);
     }
@@ -113,19 +105,5 @@ public class EventService {
         Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
 
         eventRepository.deleteById(event.getId());
-    }
-
-    private Long daysFromNow(ZonedDateTime date) {
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
-
-        return Duration.between(now, date).toDays();
-    }
-
-    private Integer workingDaysFromNow(ZonedDateTime date) {
-        Long daysFromNow = daysFromNow(date);
-
-        int weekendsDays = Math.round((float) daysFromNow / DAYS_IN_THE_WEEK) * 2;
-
-        return daysFromNow.intValue() - weekendsDays;
     }
 }
