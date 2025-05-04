@@ -38,20 +38,20 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseEventDTO>> findAll() {
+    public ResponseEntity<ResponseListAllEventDTO> findAll() {
 
-        List<ResponseEventDTO> events = this.eventService.findAll();
+        ResponseListAllEventDTO events = this.eventService.findAll();
 
         return ResponseEntity.ok(events);
     }
 
     @GetMapping("/paginate")
-    public ResponseEntity<List<ResponseEventDTO>> findAllPaginated(
+    public ResponseEntity<ResponseListAllEventDTO> findAllPaginated(
             @RequestParam String q,
             @RequestParam int page,
             @RequestParam int take
     ) {
-        List<ResponseEventDTO> events = this.eventService.findAllPaginated(q, page, take);
+        ResponseListAllEventDTO events = this.eventService.findAllPaginated(q, page, take);
 
         return ResponseEntity.ok(events);
     }

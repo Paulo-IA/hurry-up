@@ -59,11 +59,11 @@ public class EventService {
         return new ResponseUpdateEventDTO(event.getId());
     }
 
-    public List<ResponseEventDTO> findAll() {
+    public ResponseListAllEventDTO findAll() {
         List<Event> events = eventRepository.findAll();
 
 
-        return events.stream().map(e -> {
+        List<ResponseEventDTO> eventsResponse = events.stream().map(e -> {
             Countdown countdown = new Countdown(e.getDate());
 
             return new ResponseEventDTO(
@@ -74,14 +74,16 @@ public class EventService {
                     e.getCreatedAt(),
                     countdown);
         }).toList();
+
+        return new ResponseListAllEventDTO(eventsResponse);
     }
 
-    public List<ResponseEventDTO> findAllPaginated(String q, int page, int take) {
+    public ResponseListAllEventDTO findAllPaginated(String q, int page, int take) {
         Pageable pageable = PageRequest.of(page, take);
 
         Page<Event> eventsPage = this.eventRepository.findAllByEventName(q, pageable);
 
-        return eventsPage.map(e -> {
+        List<ResponseEventDTO> events = eventsPage.map(e -> {
             Countdown countdown = new Countdown(e.getDate());
 
             return new ResponseEventDTO(e.getId(),
@@ -91,6 +93,8 @@ public class EventService {
                     e.getCreatedAt(),
                     countdown);
         }).toList();
+
+        return new ResponseListAllEventDTO(events);
     }
 
     public ResponseEventDTO findById(UUID id) throws EventNotFoundException {
