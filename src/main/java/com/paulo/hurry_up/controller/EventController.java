@@ -21,7 +21,9 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseCreateEventDTO> create(@RequestBody @Valid RequestCreateEventDTO dto) throws Exception {
+    public ResponseEntity<ResponseCreateEventDTO> create(
+            @RequestBody @Valid RequestCreateEventDTO dto
+    ) throws Exception {
         ResponseCreateEventDTO response = this.eventService.create(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

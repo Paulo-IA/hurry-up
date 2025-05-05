@@ -24,14 +24,6 @@ public class EventService {
     }
 
     public ResponseCreateEventDTO create(RequestCreateEventDTO dto) {
-        if (dto.getName() == null) {
-            throw new IllegalArgumentException("Name is required");
-        }
-
-        if (dto.getDate() == null) {
-            throw new IllegalArgumentException("Date is required");
-        }
-
         Event event = new Event();
         event.setName(dto.getName());
         event.setDescription(dto.getDescription());

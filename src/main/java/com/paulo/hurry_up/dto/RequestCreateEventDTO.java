@@ -21,6 +21,7 @@ public class RequestCreateEventDTO {
     @Size(min = 3, max = 100, message = "O campo 'Nome' deve ter entre 2 e 40 caracteres!")
     String name;
 
+    @Size(max = 140, message = "O campo 'Descrição' deve ter no máximo 140 caracteres!")
     String description;
 
     @NotNull(message = "O campo 'Data' deve ser preenchido!")
