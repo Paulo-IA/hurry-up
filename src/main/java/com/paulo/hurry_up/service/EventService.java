@@ -115,6 +115,14 @@ public class EventService {
         eventRepository.deleteById(event.getId());
     }
 
+    public void updateEventImage(UUID id, RequestUpdateEventImageDTO dto) throws EventNotFoundException {
+        Event event = this.eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
+
+        event.setImageUrl(dto.getImageUrl());
+
+        this.eventRepository.save(event);
+    }
+
     public ResponseGenerateUploadPresignedUrlDTO generateUploadPresignedUrl(RequestGenerateUploadPresignedUrlDTO dto) {
         String keyName = this.getUniqueFileNameWithExtension(dto.getOriginalFileName(), dto.getMetadata());
 

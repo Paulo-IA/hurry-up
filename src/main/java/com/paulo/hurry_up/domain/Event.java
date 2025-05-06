@@ -24,6 +24,8 @@ public class Event {
     private String name;
     private String description;
 
+    private String imageUrl;
+
     @Column(name = "date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private ZonedDateTime date;
 

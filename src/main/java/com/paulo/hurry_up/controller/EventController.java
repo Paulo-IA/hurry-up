@@ -3,6 +3,7 @@ package com.paulo.hurry_up.controller;
 import com.paulo.hurry_up.dto.*;
 import com.paulo.hurry_up.service.EventService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,6 +68,16 @@ public class EventController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         this.eventService.delete(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PatchMapping("/{id}/image")
+    public ResponseEntity<Void> updateEventImage(
+        @PathVariable UUID id,
+        @RequestBody @Valid RequestUpdateEventImageDTO dto
+    ) {
+        this.eventService.updateEventImage(id, dto);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
