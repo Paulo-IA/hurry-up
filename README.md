@@ -13,7 +13,7 @@
 - [x] The system must allow deleting an event
 - [ ] The system must list all events
 - [x] The system must retrieve a single event
-- [ ] The system must allow to save a event img url
+- [x] The system must allow to save a event img url
 
 ### BR [Business Rules]
 - [x] The system will calculate the days remaining until the event
