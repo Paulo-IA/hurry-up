@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResponseGenerateUploadPresignedUrlDTO {
     private String uploadPresignedUrl;
+    private String imageUrl;
 }

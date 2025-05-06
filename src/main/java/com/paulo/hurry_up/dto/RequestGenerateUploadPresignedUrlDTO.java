@@ -13,8 +13,8 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestGenerateUploadPresignedUrlDTO {
-    @NotBlank(message = "O campo 'keyName' deve ser preenchido!")
-    private String keyName;
+    @NotBlank(message = "O campo 'originalFileName' deve ser preenchido!")
+    private String originalFileName;
 
     private Map<String, String> metadata;
 }

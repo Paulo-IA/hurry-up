@@ -1,10 +1,10 @@
 package com.paulo.hurry_up.infra;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.paulo.hurry_up.exceptions.InvalidEventFileExtensionException;
 import com.paulo.hurry_up.exceptions.EventNotFoundException;
 import com.paulo.hurry_up.exceptions.Message;
 import com.paulo.hurry_up.exceptions.ResponseException;
-import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -31,6 +31,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(InvalidEventFileExtensionException.class)
+    private ResponseEntity<ResponseException> invalidEventFileExtensionHandler(InvalidEventFileExtensionException exception) {
+        ArrayList<Message> errors = new ArrayList<Message>();
+        errors.add(new Message("event", exception.getMessage()));
+
+        ResponseException response = new ResponseException(errors, HttpStatus.BAD_REQUEST.value());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(

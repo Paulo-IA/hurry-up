@@ -2,6 +2,7 @@ package com.paulo.hurry_up.service;
 
 import com.paulo.hurry_up.dto.*;
 import com.paulo.hurry_up.domain.Event;
+import com.paulo.hurry_up.exceptions.InvalidEventFileExtensionException;
 import com.paulo.hurry_up.exceptions.EventNotFoundException;
 import com.paulo.hurry_up.repository.EventRepository;
 import com.paulo.hurry_up.service.provider.PresignedUrlProvider;
@@ -115,12 +116,35 @@ public class EventService {
     }
 
     public ResponseGenerateUploadPresignedUrlDTO generateUploadPresignedUrl(RequestGenerateUploadPresignedUrlDTO dto) {
+        String keyName = this.getUniqueFileNameWithExtension(dto.getOriginalFileName(), dto.getMetadata());
+
+        System.out.println(keyName);
+
         String presignedUploadUrl = this.presignedUrlProvider.generateUploadPresignedUrl(
                 bucketName,
-                dto.getKeyName(),
-                dto.getMetadata() != null ? dto.getMetadata() : Map.of()
+                keyName,
+                dto.getMetadata()
         );
 
-        return new ResponseGenerateUploadPresignedUrlDTO(presignedUploadUrl);
+        String imageUrl = getImageUrl(keyName);
+
+        return new ResponseGenerateUploadPresignedUrlDTO(presignedUploadUrl, imageUrl);
+    }
+
+    private String getImageUrl(String keyName) {
+        return "https://" + bucketName + ".s3.us-east-1.amazonaws.com/" + keyName;
+    }
+
+    private String getUniqueFileNameWithExtension(String keyName, Map<String, String> metadata) {
+        String fileExtension = metadata.get("extension");
+        if (fileExtension == null) {
+            throw new InvalidEventFileExtensionException();
+        }
+
+        String fileName = keyName.split("\\.")[0]
+                            .toLowerCase()
+                            .replaceAll("[^a-z0-9_-]", "-");
+
+        return UUID.randomUUID() + "-" + fileName + "." + fileExtension;
     }
 }
