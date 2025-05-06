@@ -4,6 +4,8 @@ import com.paulo.hurry_up.dto.*;
 import com.paulo.hurry_up.domain.Event;
 import com.paulo.hurry_up.exceptions.EventNotFoundException;
 import com.paulo.hurry_up.repository.EventRepository;
+import com.paulo.hurry_up.service.provider.PresignedUrlProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,15 +14,24 @@ import org.springframework.stereotype.Service;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
 public class EventService {
 
-    private final EventRepository eventRepository;
+    @Value("${aws.s3.bucket.name}")
+    private String bucketName;
 
-    public EventService(EventRepository eventRepository) {
+    private final EventRepository eventRepository;
+    private final PresignedUrlProvider presignedUrlProvider;
+
+    public EventService(
+            EventRepository eventRepository,
+            PresignedUrlProvider presignedUrlProvider
+    ) {
         this.eventRepository = eventRepository;
+        this.presignedUrlProvider = presignedUrlProvider;
     }
 
     public ResponseCreateEventDTO create(RequestCreateEventDTO dto) {
@@ -101,5 +112,15 @@ public class EventService {
         Event event = eventRepository.findById(id).orElseThrow(EventNotFoundException::new);
 
         eventRepository.deleteById(event.getId());
+    }
+
+    public ResponseGenerateUploadPresignedUrlDTO generateUploadPresignedUrl(RequestGenerateUploadPresignedUrlDTO dto) {
+        String presignedUploadUrl = this.presignedUrlProvider.generateUploadPresignedUrl(
+                bucketName,
+                dto.getKeyName(),
+                dto.getMetadata() != null ? dto.getMetadata() : Map.of()
+        );
+
+        return new ResponseGenerateUploadPresignedUrlDTO(presignedUploadUrl);
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -70,5 +69,14 @@ public class EventController {
         this.eventService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("/generate-upload-presigned-url")
+    public ResponseEntity<ResponseGenerateUploadPresignedUrlDTO> generateUploadPresignedUrl(
+            @RequestBody @Valid RequestGenerateUploadPresignedUrlDTO dto
+    ) {
+        ResponseGenerateUploadPresignedUrlDTO response = this.eventService.generateUploadPresignedUrl(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

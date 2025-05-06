@@ -13,11 +13,13 @@
 - [x] The system must allow deleting an event
 - [ ] The system must list all events
 - [x] The system must retrieve a single event
+- [ ] The system must allow to save a event img url
 
 ### BR [Business Rules]
 - [x] The system will calculate the days remaining until the event
 - [x] The system will calculate the working days remaining until the event
-- [ ] Each event must include a name, description, date, and image, with image and description as optional fields
+- [x] Each event must include a name, description, date, and image, with image and description as optional fields
+- [x] The system must allow creating a presigned url to upload the image
 - [x] The event list must support filtering by title or description
 - [x] The event description must have a maximum of 140 characters
 - [x] Create error handling
