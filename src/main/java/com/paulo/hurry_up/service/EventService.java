@@ -66,7 +66,6 @@ public class EventService {
     public ResponseListAllEventDTO findAll() {
         List<Event> events = eventRepository.findAll();
 
-
         List<ResponseEventDTO> eventsResponse = events.stream().map(e -> {
             Countdown countdown = new Countdown(e.getDate());
 
@@ -74,6 +73,7 @@ public class EventService {
                     e.getId(),
                     e.getName(),
                     e.getDescription(),
+                    e.getImageUrl(),
                     e.getDate(),
                     e.getCreatedAt(),
                     countdown);
@@ -90,9 +90,11 @@ public class EventService {
         List<ResponseEventDTO> events = eventsPage.map(e -> {
             Countdown countdown = new Countdown(e.getDate());
 
-            return new ResponseEventDTO(e.getId(),
+            return new ResponseEventDTO(
+                    e.getId(),
                     e.getName(),
                     e.getDescription(),
+                    e.getImageUrl(),
                     e.getDate(),
                     e.getCreatedAt(),
                     countdown);
@@ -106,7 +108,15 @@ public class EventService {
 
         Countdown countdown = new Countdown(event.getDate());
 
-        return new ResponseEventDTO(event.getId(), event.getName(), event.getDescription(), event.getDate(), event.getCreatedAt(), countdown);
+        return new ResponseEventDTO(
+                event.getId(),
+                event.getName(),
+                event.getDescription(),
+                event.getImageUrl(),
+                event.getDate(),
+                event.getCreatedAt(),
+                countdown
+        );
     }
 
     public void delete(UUID id) throws EventNotFoundException {

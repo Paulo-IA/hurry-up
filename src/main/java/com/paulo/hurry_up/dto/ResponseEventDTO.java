@@ -16,6 +16,7 @@ public class ResponseEventDTO {
     private UUID id;
     private String name;
     private String description;
+    private String imageUrl;
     private ZonedDateTime date;
     private ZonedDateTime createdAt;
     private Countdown countdown;
