@@ -8,10 +8,10 @@
 ## Requirements
 
 ### FR [Functional Requirements]
-- [ ] The system must allow creating an event
+- [x] The system must allow creating an event
 - [x] The system must allow updating an event
 - [x] The system must allow deleting an event
-- [ ] The system must list all events
+- [x] The system must list all events
 - [x] The system must retrieve a single event
 - [x] The system must allow to save a event img url
 
